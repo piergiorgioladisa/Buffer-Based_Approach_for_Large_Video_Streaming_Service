@@ -16,12 +16,13 @@ from BaseController import BaseController
 
 DEBUG = 1
 
+
 # This controller is an implementation of the BBA0 Controller
 # described in Chapter 4 of the paper:
 # Zhi Li, et al, "A Buffer-Based Approach to Rate Adaptation: Evidence from a Large Video Streaming Service", Te-Yuan Huang, Ramesh Johari, Nick McKeown, Matthew Trunnell, Mark Watson Stanford University, Netflix
 
 class BBA0Controller(BaseController):
-    
+
     def __init__(self):
         super(BBA0Controller, self).__init__()
         self.conf = {
@@ -30,70 +31,70 @@ class BBA0Controller(BaseController):
         }
 
     def __repr__(self):
-        return '<BBA0Controller-%d>' %id(self)
+        return '<BBA0Controller-%d>' % id(self)
+
+    def f(Buf_now):
+        # The function f corresponds to the line equation between the points
+        # (r,R_min) and (r+cu,R_max) when the value of Buf_now is
+        # bounded by r and r+cu
+        return Buf_now * ((R_max - R_min) / self.conf["cu"]) + (
+                    R_min - ((self.conf["r"] / self.conf["cu"]) * (R_max - R_min)))
+
+    def maxR(self, constraint):
+        Rates = self.feedback['rates']
+        result = Rates[0]
+        for i in Rates:
+            if (i > constraint and result > i):
+                result = Rates[i]
+        return result
+
+    def minR(self, constraint):
+        Rates = self.feedback['rates']
+        result = Rates[0]
+        for i in Rates:
+            if (i < constraint and result < i):
+                result = i
+        return result
 
     def calcControlAction(self):
         self.setIdleDuration(0.0)
 
         # Retrive current iteration variables
-        R_max= self.feedback['max_rate']
-        R_min=self.feedback['min_rate']
-        R_curr=self.feedback['cur_rate']
+        R_max = self.feedback['max_rate']
+        R_min = self.feedback['min_rate']
+        R_curr = self.feedback['cur_rate']
         B_now = self.feedback['queued_time']
 
         # Compute upperbound
         if R_curr == R_max:
             R_plus = R_max
         else:
-            R_plus = min(R_curr)
+            R_plus = self.minR(R_curr)
 
         # Compute lowerbound
         if R_curr == R_min:
             R_minus = R_min
         else:
-            R_minus = max(R_curr)
+            R_minus = self.maxR(R_curr)
 
-        #Compute new rate based in current buffer region
+        # Compute new rate based in current buffer region
 
-        #Buffer in reservoir area
+        # Buffer in reservoir area
         if B_now <= self.conf["r"]:
-            Rate_next= R_min
+            Rate_next = R_min
 
-        #Buffer in upper reservoir area
+        # Buffer in upper reservoir area
         elif B_now >= self.conf["r"] + self.conf["cu"]:
             Rate_next = R_max
 
-        #Buffer in cushion area
+        # Buffer in cushion area
         elif f(Buf_now) >= R_plus:
-            Rate_next= max(f(Buf_now))
+            Rate_next = self.maxR(f(Buf_now))
         elif f(Buf_now) <= R_minus:
-            Rate_next= min(f(Buf_now))
+            Rate_next = self.minR(f(Buf_now))
 
         else:
-            Rate_next=R_curr
-
+            Rate_next = R_curr
 
         return Rate_next
-
-    def f(Buf_now):
-       # The function f corresponds to the line equation between the points
-       # (r,R_min) and (r+cu,R_max) when the value of Buf_now is
-       # bounded by r and r+cu
-        return Buf_now*((R_max - R_min)/self.conf["cu"]) + (R_min - ((self.conf["r"]/self.conf["cu"])*(R_max - R_min)))
-
-    def max(constraint):
-        Rates = self.feedback['rates']
-        result = Rates[0]
-        for i in len(Rates):
-            if Rates[i] > constraint & result > Rates[i]:
-                result = Rates[i]
-        return result
-
-    def min(constraint):
-        Rates = self.feedback['rates']
-        result = Rates[0]
-        for i in len(Rates):
-            if Rates[i] < constraint & result < Rates[i]:
-                result = Rates[i]
-        return result
 
