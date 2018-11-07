@@ -21,7 +21,7 @@ DEBUG = 1
 # Zhi Li, et al, "A Buffer-Based Approach to Rate Adaptation: Evidence from a Large Video Streaming Service", Te-Yuan Huang, Ramesh Johari, Nick McKeown, Matthew Trunnell, Mark Watson Stanford University, Netflix
 
 class BBA0Controller(BaseController):
-    
+
 def __init__(self):
     super(BBA0Controller, self).__init__()
     self.conf = {
@@ -34,14 +34,14 @@ def __repr__(self):
 
 def calcControlAction(self):
     self.setIdleDuration(0.0)
-    
+
     # Retrive current iteration variables
     R_max= self.feedback['max_rate']
     R_min=self.feedback['min_rate']
     R_curr=self.feedback['cur_rate']
     Rates=self.feedback['rates']
     B_now = self.feedback['queued_time']
-    
+
     # Compute upperbound
     if R_curr == R_max:
         R_plus = R_max
@@ -55,7 +55,7 @@ def calcControlAction(self):
         R_minus = max(R_curr)
 
     #Compute new rate based in current buffer region
-    
+
     #Buffer in reservoir area
     if B_now <= self.conf["r"]:
         Rate_next= R_min
@@ -92,4 +92,11 @@ def min(constraint):
         if Rates[i]< constraint & result< Rates[i]:
             result=Rates[i]
     return result
-                
+
+  def f(Buf_now):
+    '''
+      The function f corresponds to the line equation between the points
+      (r,R_min) and (r+cu,R_max) when the value of Buf_now is bounded by
+      r and r+cu
+    '''
+    return(Buf_now*((R_max - R_min)/self.conf["cu"]) + (R_min - ((self.conf["r"]/self.conf["cu"])*(R_max - R_min))
