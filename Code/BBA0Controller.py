@@ -22,44 +22,74 @@ DEBUG = 1
 
 class BBA0Controller(BaseController):
     
-    def __init__(self):
-        super(BBA0Controller, self).__init__()
+def __init__(self):
+    super(BBA0Controller, self).__init__()
     self.conf = {
         "r": 90,
-        "cu": 126,
-        "Rate_prev": 0.
+        "cu": 126
     }
 
-    def __repr__(self):
-        return '<BBA0Controller-%d>' %id(self)
+def __repr__(self):
+    return '<BBA0Controller-%d>' %id(self)
 
 def calcControlAction(self):
     self.setIdleDuration(0.0)
-    R_plus
-    Rate_next
+    
+    # Retrive current iteration variables
+    R_max= self.feedback['max_rate']
+    R_min=self.feedback['min_rate']
+    R_curr=self.feedback['cur_rate']
+    Rates=self.feedback['rates']
     B_now = self.feedback['queued_time']
-    if self.conf["Rate_prev"] = self.feedback['max_rate']:
-        R_plus = self.feedback['max_rate']
+    
+    # Compute upperbound
+    if R_curr == R_max:
+        R_plus = R_max
     else:
-        R_plus = min{Ri > Rate_prev}
-    if self.conf["Rate_prev"] = self.feedback['min_rate']:
-        R_minus = self.feedback['min_rate']
-    else:
-        R_minus = max {Ri>Rate_prev}
+        R_plus = min(R_curr)
 
-    if self.feedback['queued_bytes'] <= self.conf["r"]:
-        Rate_next= self.feedback['min_rate']
-    else if self.feedback['queued_time'] >= self.conf["r"] + self.conf["cu"]:
-        Rate_next =self.feedback['max_rate']
-    function_res = f(self.feedback['queued_bytes'])
-    else if function_res >= R_plus:
-        Rate_next= max {Ri<function_res}
-    else if function_res<= R_minus:
-        Rate_next= min {Ri>function_res}
+    # Compute lowerbound
+    if R_curr == R_min:
+        R_minus = R_min
+    else:
+        R_minus = max(R_curr)
+
+    #Compute new rate based in current buffer region
+    
+    #Buffer in reservoir area
+    if B_now <= self.conf["r"]:
+        Rate_next= R_min
+
+    #Buffer in upper reservoir area
+    elif B_now >= self.conf["r"] + self.conf["cu"]:
+        Rate_next = R_max
+
+    #Buffer in cushion area
+    elif f(Buf_now) >= R_plus:
+        Rate_next= max(f(Buf_now))
+    elif f(Buf_now) <= R_minus:
+        Rate_next= min(f(Buf_now))
+
     else
-        Rate_next=Rate_prev
+        Rate_next=R_curr
+
+
     return Rate_next
 
 def f(Buf_now):
-    return (self.feedback['max_rate']-self.feedback['min_rate'])*self.feedback['queued_bytes']/(self.conf["r"] + self.conf["cu"])
+
+
+def max(constraint):
+    result=Rates[0]
+    for each i in Rates[]:
+        if Rates[i]> constraint & result> Rates[i]:
+            result=Rates[i]
+    return result
+
+def min(constraint):
+    result=Rates[0]
+    for each i in Rates[]:
+        if Rates[i]< constraint & result< Rates[i]:
+            result=Rates[i]
+    return result
                 
