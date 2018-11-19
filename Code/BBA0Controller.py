@@ -59,7 +59,7 @@ class BBA0Controller(BaseController):
 
         # Retrive current iteration variables
         reservoir = self.feedback['max_buffer_time'] * 0.2
-        cushion = self.feedback['max_buffer_time'] * 0.8 - reservoir
+        cushion = self.feedback['max_buffer_time'] * 0.8 - reservoir * 0.5
         R_max = self.feedback['max_rate']
         R_min = self.feedback['min_rate']
         R_curr = self.feedback['cur_rate']
