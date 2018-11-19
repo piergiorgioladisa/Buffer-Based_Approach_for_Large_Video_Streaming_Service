@@ -33,7 +33,7 @@ class BBA0Controller(BaseController):
         # (r,R_min) and (r+cu,R_max) when the value of Buf_now is
         # bounded by r and r+cu
         reservoir = self.feedback['max_buffer_time'] * 0.2
-        cushion = self.feedback['max_buffer_time'] * 0.8 - reservoir
+        cushion = self.feedback['max_buffer_time'] * 0.8 - reservoir * 0.5
         R_max = self.feedback['max_rate']
         R_min = self.feedback['min_rate']
 
