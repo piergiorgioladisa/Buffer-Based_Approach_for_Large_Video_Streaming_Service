@@ -16,9 +16,11 @@ from BaseController import BaseController
 
 DEBUG = 1
 
+
 # This controller is an implementation of the BBA0 Controller
 # described in Chapter 4 of the paper:
-# Zhi Li, et al, "A Buffer-Based Approach to Rate Adaptation: Evidence from a Large Video Streaming Service", Te-Yuan Huang, Ramesh Johari, Nick McKeown, Matthew Trunnell, Mark Watson Stanford University, Netflix
+# Zhi Li, et al, "A Buffer-Based Approach to Rate Adaptation: Evidence from a Large Video Streaming Service",
+# Te-Yuan Huang, Ramesh Johari, Nick McKeown, Matthew Trunnell, Mark Watson Stanford University, Netflix
 
 class BBA0Controller(BaseController):
 
@@ -28,38 +30,36 @@ class BBA0Controller(BaseController):
     def __repr__(self):
         return '<BBA0Controller-%d>' % id(self)
 
-    def f(self, B_now):
+    def f(self, B_now, reservoir, cushion, R_max, R_min):
         # The function f corresponds to the line equation between the points
         # (r,R_min) and (r+cu,R_max) when the value of Buf_now is
         # bounded by r and r+cu
-        reservoir = self.feedback['max_buffer_time'] * 0.2
-        cushion = self.feedback['max_buffer_time'] * 0.8 - reservoir * 0.5
-        R_max = self.feedback['max_rate']
-        R_min = self.feedback['min_rate']
-
         return B_now * ((R_max - R_min) / cushion) + (R_min - ((reservoir / cushion) * (R_max - R_min)))
 
     def maxR(self, constraint):
         Rates = self.feedback['rates']
-        result = Rates[0]
+        results = []
         for i in Rates:
-            if (i < constraint and result > i):
-                result = i
-        return result
+            if (i < constraint):
+                results.append(i)
+        return max(results)
 
     def minR(self, constraint):
         Rates = self.feedback['rates']
-        result = Rates[0]
+        results = []
         for i in Rates:
-            if (i > constraint and result < i):
-                result = i
-        return result
+            if (i > constraint):
+                results.append(i)
+        return min(results)
 
     def calcControlAction(self):
 
         # Retrive current iteration variables
-        reservoir = self.feedback['max_buffer_time'] * 0.2
-        cushion = self.feedback['max_buffer_time'] * 0.8 - reservoir * 0.5
+        percentage_reservoir = 0.15
+        percentage_cushion = 0.65
+        percentage_upper_reservoir = 0.20
+        reservoir = self.feedback['max_buffer_time'] * percentage_reservoir
+        cushion = self.feedback['max_buffer_time'] * percentage_cushion
         R_max = self.feedback['max_rate']
         R_min = self.feedback['min_rate']
         R_curr = self.feedback['cur_rate']
@@ -77,6 +77,10 @@ class BBA0Controller(BaseController):
         else:
             R_minus = self.maxR(R_curr)
 
+        print "R_plus: ", R_plus
+        print "R_minus: ", R_minus
+        print "f(): ", self.f(B_now, reservoir, cushion, R_max, R_min)
+
         # Compute new rate based in current buffer region
 
         # Buffer in reservoir area
@@ -88,13 +92,24 @@ class BBA0Controller(BaseController):
             Rate_next = R_max
 
         # Buffer in cushion area
-        elif self.f(B_now) >= R_plus:
-            Rate_next = self.maxR(self.f(B_now))
-        elif self.f(B_now) <= R_minus:
-            Rate_next = self.minR(self.f(B_now))
+        elif self.f(B_now, reservoir, cushion, R_max, R_min) >= R_plus:
+            Rate_next = self.maxR(self.f(B_now, reservoir, cushion, R_max, R_min))
+            print "max f()"
+        elif self.f(B_now, reservoir, cushion, R_max, R_min) <= R_minus:
+            Rate_next = self.minR(self.f(B_now, reservoir, cushion, R_max, R_min))
+            print "min f()"
 
         else:
             Rate_next = R_curr
+
+        print "Reservoir: ", reservoir
+        print "Cushion: ", cushion
+        print "Upper_reservoir: ", self.feedback['max_buffer_time'] * percentage_upper_reservoir
+        print "Rates: ", self.feedback['rates']
+        print "R_max: ", R_max
+        print "R_min: ", R_min
+        print "R_curr: ", R_curr
+        print "B_now: ", B_now
 
         return Rate_next
 
