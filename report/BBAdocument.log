@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.8.3)  19 NOV 2018 01:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.8.3)  20 NOV 2018 23:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,19 +6,20 @@ entering extended mode
 (./BBAdocument.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
-\c@section=\count80
-\c@subsection=\count81
-\c@subsubsection=\count82
-\c@paragraph=\count83
-\c@subparagraph=\count84
-\c@figure=\count85
-\c@table=\count86
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
@@ -368,7 +369,7 @@ Language: english 2017/01/24 v3.3q English support from the babel system
 
 (/usr/local/texlive/2017/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2017/05/19 3.10 Babel common definitions
-\babel@savecnt=\count87
+\babel@savecnt=\count88
 \U@D=\dimen103
 )
 \l@canadian = a dialect from \language\l@american 
@@ -402,7 +403,7 @@ Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count88
+\Gread@gobject=\count89
 ))
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
@@ -410,14 +411,14 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 (/usr/local/texlive/2017/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen106
 \WF@size=\dimen107
-\c@WF@wrappedlines=\count89
+\c@WF@wrappedlines=\count90
 \WF@box=\box26
 \WF@everypar=\toks18
 Package: wrapfig 2003/01/31  v 3.6
 )
 (/usr/local/texlive/2017/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count90
+\c@float@type=\count91
 \float@exts=\toks19
 \float@box=\box27
 \@float@everytoks=\toks20
@@ -425,47 +426,55 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 )
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lipsum/lipsum.sty
 Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
-\c@lips@count=\count91
+\c@lips@count=\count92
 )
 (/usr/local/texlive/2017/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
-\FV@CodeLineNo=\count92
+\FV@CodeLineNo=\count93
 \FV@InFile=\read1
 \FV@TabBox=\box29
-\c@FancyVerbLine=\count93
-\FV@StepNumber=\count94
+\c@FancyVerbLine=\count94
+\FV@StepNumber=\count95
 \FV@OutFile=\write3
-) (./BBAdocument.aux)
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip43
+\bibsep=\skip44
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count96
+)
+(./BBAdocument.aux)
 \openout1 = `BBAdocument.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
 
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count95
+\scratchcounter=\count97
 \scratchdimen=\dimen108
 \scratchbox=\box30
-\nofMPsegments=\count96
-\nofMParguments=\count97
+\nofMPsegments=\count98
+\nofMParguments=\count99
 \everyMPshowfont=\toks21
-\MPscratchCnt=\count98
+\MPscratchCnt=\count100
 \MPscratchDim=\dimen109
-\MPnumerator=\count99
-\makeMPintoPDFobject=\count100
+\MPnumerator=\count101
+\makeMPintoPDFobject=\count102
 \everyMPtoPDFconversion=\toks22
 ) (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
@@ -516,73 +525,79 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 21.
+LaTeX Font Info:    Try loading font information for U+msa on input line 23.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 21.
+LaTeX Font Info:    Try loading font information for U+msb on input line 23.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+bbold on input line 21.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 23.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/bbold/Ubbold.fd) [1
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 29.
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [1
+
+]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 31.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 29.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 31.
  [2]
-<buffer.png, id=15, 426.59375pt x 381.425pt>
+Chapter 1.
+<buffer.png, id=18, 426.59375pt x 381.425pt>
 File: buffer.png Graphic file (type png)
  <use buffer.png>
-Package pdftex.def Info: buffer.png used on input line 50.
+Package pdftex.def Info: buffer.png used on input line 52.
 (pdftex.def)             Requested size: 241.49895pt x 215.93037pt.
- [3 <./buffer.png>] <ratemapBBA0.png, id=25, 377.41pt x 259.97125pt>
+ [3
+
+ <./buffer.png>] <ratemapBBA0.png, id=29, 377.41pt x 259.97125pt>
 File: ratemapBBA0.png Graphic file (type png)
  <use ratemapBBA0.png>
-Package pdftex.def Info: ratemapBBA0.png used on input line 79.
+Package pdftex.def Info: ratemapBBA0.png used on input line 81.
 (pdftex.def)             Requested size: 241.49895pt x 166.34929pt.
 
-[4 <./ratemapBBA0.png>]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 101.
+[4]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 105.
 
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
+ (/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [5]
-(./BBAdocument.aux) ) 
+) [5 <./ratemapBBA0.png>] [6] [7] (./BBAdocument.bbl [8]) [9
+
+] (./BBAdocument.aux) ) 
 Here is how much of TeX's memory you used:
- 3318 strings out of 492995
- 44224 string characters out of 6132705
- 210370 words of memory out of 5000000
- 6784 multiletter control sequences out of 15000+600000
- 18259 words of font info for 56 fonts, out of 8000000 for 9000
+ 3674 strings out of 492995
+ 48511 string characters out of 6132705
+ 216524 words of memory out of 5000000
+ 7131 multiletter control sequences out of 15000+600000
+ 19805 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,6n,25p,537b,264s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-sup
-er/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sf
-bx1000.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx
-1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx20
-74.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000
+ 39i,6n,25p,537b,262s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-s
+uper/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmi7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/
+sfbx1000.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sf
+bx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx
+2074.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx24
+88.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000
 .pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.p
 fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on BBAdocument.pdf (5 pages, 259977 bytes).
+Output written on BBAdocument.pdf (10 pages, 295671 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 95 PDF objects out of 1000 (max. 8388607)
+ 65 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

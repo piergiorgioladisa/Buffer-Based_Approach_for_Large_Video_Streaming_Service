@@ -1,0 +1,9 @@
+\begin{thebibliography}{1}
+
+\bibitem{Huang:2014:BAR:2740070.2626296}
+Te-Yuan Huang, Ramesh Johari, Nick McKeown, Matthew Trunnell, and Mark Watson.
+\newblock A buffer-based approach to rate adaptation: Evidence from a large
+  video streaming service.
+\newblock {\em SIGCOMM Comput. Commun. Rev.}, 44(4):187--198, August 2014.
+
+\end{thebibliography}

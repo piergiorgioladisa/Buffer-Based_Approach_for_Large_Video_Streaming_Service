@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper]{report}
 \usepackage[T1]{fontenc}
 \usepackage{amsfonts}
 \usepackage{mathbbol}
@@ -9,6 +9,8 @@
 \usepackage{float}
 \usepackage{lipsum}
 \usepackage{fancyvrb}
+\usepackage{natbib}
+
 
 \title{Buffer-based algorithm implementation to Rate Adaptation} 
 
@@ -42,7 +44,7 @@ This adaptation is usually done on client-side. Here the content is divided in c
 \item Buffer and Rate based. This is an hybrid approach, i.e. is based on the rate-based approach basically, but the previous chunk download speed is weighted using a factor that depends on the amount of the saturation of the buffer: if the buffer is depleting the previous chunk, the download speed will be considered to be less than the measured one and hence a lower quality is selected. 
 \end{itemize}
 
-\part*{A buffer-based approach to rate adaptation}
+\chapter{A buffer-based approach to rate adaptation}
 When the client want to access to a video-content for streaming, it chooses which the video rate to stream by monitoring network conditions and estimating the available network capacity. This process is referred to as \textit{adaptive bit rate selection} or \textit{ABR}.
 ABR algorithms try to balance two opposite goals. The first goal is  to maximize the video quality choosing as video rate the highest supportable by the network. The second goal is to minimize re-buffering events, which cause the video to halt if the client?s playback buffer goes empty. Data is requested in chunks and the buffer drains at 1 unit/second. So if the video-rate $R(t)$ is greater than the system capacity $C(t)$, new data is added at $C(T)/R(T)<1$, depleting the buffer.
 \begin{figure}[H]
@@ -71,22 +73,24 @@ Let us assume that:
 \end{itemize}
 Thus, as long as $C(t) \geq R_{min}$ and $f(B)$ tends to $R_{min}$ when $B$ tends to $0$, there will not be unnecessary rebuffering events. So, as long as $f(B)$ increases to $R_{max}$, the average video rate will match the average capacity when it is true that $R_{min}<C(t)<R_{max}$.
 
-\section*{BBA0-Algorithm}
+\section{BBA0-Algorithm}
 The rate map implemented by the BBA0 algorithm is the following:
 
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width=0.7\textwidth]{ratemapBBA0}
   \end{center}
+  \caption{Rate map of the BBA0 algorithm }\label{ratemapBBA0}
 \end{figure}
 
 This algorithm add reservoir $r$ to pad for finite chunk sizes and some $C(t)$ variation. So, while filling reservoir, it request $R_{min}$ and must have $r$ greater or equal to the minimum chunk size. In addition, an upper reservoir is added to reach $R_{max}$ before the buffer B is full and above the "safe area" is where the buffer will not deplete into $r$ if $C(t)$ suddenly drops, but does not reach values lower than $R_{min}$.
 
-\subsubsection*{BBA0 Algorithm}
+\subsubsection{BBA0 Algorithm}
+The algorithm presented in ~\citep{Huang:2014:BAR:2740070.2626296}, in pseudo-code, is the following:
 
 \textbf{Input}: 
 \begin{itemize}
-\item Rate$_{prev}$: previously used video;
+\item Rate$_{prev}$: previously used video rate;
 
 \item Buf$_{now}$: current buffer occupancy;
 
@@ -129,6 +133,124 @@ return Rate_next;
 	
 \end{Verbatim}
 
+This constitute a buffer-based algorithm to the rate adaptation in playing contents from the client.
+
+\subsubsection{Implementation of BBA0 Algorithm}
+The implementation that we have done of the BBA0 algorithm is written in Python and is presented below.
+
+Since the BBA0 Algorithm regards the algorithm for the controller in the player, what we have implemented is a controller used by the player defined in the script \textit{play.py}.
+
+Firstly, we have defined the class BBA0Controller, in order to be imported by the player and executed through the specification of the use of this controller. So the definition of the class is the following:
+\begin{Verbatim}
+
+class BBA0Controller(BaseController):
+
+    def __init__(self):
+        super(BBA0Controller, self).__init__()
+
+    def __repr__(self):
+        return '<BBA0Controller-%d>' % id(self)
+\end{Verbatim}
+
+
+The code below specifies the rate-map function $f(B)$, that is the line passing from the points $(reservoir, R_{min})$ and $(reservoir+cushion, R_{max})$. Hence the equation for the line is the following:
+
+\[
+f(B) = B *(\frac{(R_{max} - R_{min})}{cushion} + (R_{min} - \frac{reservoir}{cushion}) * (R_{max} - R_{min})
+\]
+
+so, the declaration of the function member of the class requires as input the object itself (i.e., \textit{self}), the current value of the buffer (i.e., \textit{B\_now}), the value for the \textit{reservoir}, the \textit{cushion} and the maximum and minimum values of the rate (i.e., respectively \textit{R\_max} and \textit{R\_min}).
+
+\begin{Verbatim}
+    def f(self, B_now, reservoir, cushion, R_max, R_min):
+        # The function f corresponds to the line equation between the 
+        # points (r,R_min) and (r+cu,R_max) when the value of Buf_now 
+        # is bounded by r and r+cu
+        return B_now * ((R_max - R_min) / cushion) + 
+        		(R_min - ((reservoir / cushion) * (R_max - R_min)))
+\end{Verbatim}
+
+WRITE THE EXPLANATION OF FUNCTIONS MAXR AND MIN R
+
+\begin{Verbatim}
+    def maxR(self, constraint):
+        Rates = self.feedback['rates']
+        results = []
+        for i in Rates:
+            if (i < constraint):
+                results.append(i)
+        return max(results)
+
+    def minR(self, constraint):
+        Rates = self.feedback['rates']
+        results = []
+        for i in Rates:
+            if (i > constraint):
+                results.append(i)
+        return min(results)
+\end{Verbatim}
+
+The method member of the class defined below is the actual implementation of the BBA0 algorithm. In order to reproduce the behavior depicted in Figure ~\ref{ratemapBBA0}, the percentages for the
+\begin{itemize}
+\item \textit{reservoir} is setted at $15\%$;
+\item \textit{cushion} is setted at $65\%$;
+\item \textit{upper-reservoir} is setted at $20\%$;
+\end{itemize}
+\begin{Verbatim}
+    def calcControlAction(self):
+
+        # Retrive current iteration variables
+        percentage_reservoir = 0.15
+        percentage_cushion = 0.65
+        percentage_upper_reservoir = 0.20
+        reservoir = self.feedback['max_buffer_time'] * percentage_reservoir
+        cushion = self.feedback['max_buffer_time'] * percentage_cushion
+        R_max = self.feedback['max_rate']
+        R_min = self.feedback['min_rate']
+        R_curr = self.feedback['cur_rate']
+        B_now = self.feedback['queued_time']
+
+        # Compute upperbound
+        if R_curr == R_max:
+            R_plus = R_max
+        else:
+            R_plus = self.minR(R_curr)
+
+        # Compute lowerbound
+        if R_curr == R_min:
+            R_minus = R_min
+        else:
+            R_minus = self.maxR(R_curr)
+
+        # Compute new rate based in current buffer region
+
+        # Buffer in reservoir area
+        if B_now <= reservoir:
+            Rate_next = R_min
+
+        # Buffer in upper reservoir area
+        elif B_now >= reservoir + cushion:
+            Rate_next = R_max
+
+        # Buffer in cushion area
+        elif self.f(B_now, reservoir, cushion, R_max, R_min) >= R_plus:
+            Rate_next = self.maxR(self.f(B_now, reservoir, cushion, R_max, R_min))
+        elif self.f(B_now, reservoir, cushion, R_max, R_min) <= R_minus:
+            Rate_next = self.minR(self.f(B_now, reservoir, cushion, R_max, R_min))
+        
+        else:
+            Rate_next = R_curr
+
+        return Rate_next
+
+\end{Verbatim}
+
+
+
+
+%------- BIBLIOGRAPHY -----------
+\bibliography{bibliography}
+\bibliographystyle{plain}
 
 \end{document}
 
