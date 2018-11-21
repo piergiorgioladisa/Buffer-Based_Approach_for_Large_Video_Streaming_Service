@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.8.3)  20 NOV 2018 23:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.8.3)  21 NOV 2018 00:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -447,21 +447,26 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count96
 )
+\@indexfile=\write4
+\openout4 = `BBAdocument.idx'.
+
+
+Writing index file BBAdocument.idx
 (./BBAdocument.aux)
 \openout1 = `BBAdocument.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
 
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -525,61 +530,98 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 23.
+LaTeX Font Info:    Try loading font information for U+msa on input line 26.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 23.
+LaTeX Font Info:    Try loading font information for U+msb on input line 26.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+bbold on input line 23.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 26.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/bbold/Ubbold.fd) [1
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [1
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./BBAd
+ocument.toc)
+\tf@toc=\write5
+\openout5 = `BBAdocument.toc'.
+
+
+[1
+
+] (./BBAdocument.lof)
+\tf@lof=\write6
+\openout6 = `BBAdocument.lof'.
+
+ [2
+
+] [3
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 31.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 36.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 31.
- [2]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
+ [4]
 Chapter 1.
-<buffer.png, id=18, 426.59375pt x 381.425pt>
+<buffer.png, id=25, 426.59375pt x 381.425pt>
 File: buffer.png Graphic file (type png)
  <use buffer.png>
-Package pdftex.def Info: buffer.png used on input line 52.
-(pdftex.def)             Requested size: 241.49895pt x 215.93037pt.
- [3
+Package pdftex.def Info: buffer.png used on input line 57.
+(pdftex.def)             Requested size: 172.5pt x 154.23764pt.
+ [5
 
- <./buffer.png>] <ratemapBBA0.png, id=29, 377.41pt x 259.97125pt>
+ <./buffer.png>] <ratemapBBA0.png, id=35, 377.41pt x 259.97125pt>
 File: ratemapBBA0.png Graphic file (type png)
  <use ratemapBBA0.png>
-Package pdftex.def Info: ratemapBBA0.png used on input line 81.
+Package pdftex.def Info: ratemapBBA0.png used on input line 87.
 (pdftex.def)             Requested size: 241.49895pt x 166.34929pt.
 
-[4]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 105.
+[6]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 111.
 
  (/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [5 <./ratemapBBA0.png>] [6] [7] (./BBAdocument.bbl [8]) [9
+) [7 <./ratemapBBA0.png>] [8] [9] [10]
+<res_ten_cushion_seventyfive.png, id=56, 1356.06625pt x 653.44125pt>
+File: res_ten_cushion_seventyfive.png Graphic file (type png)
+
+<use res_ten_cushion_seventyfive.png>
+Package pdftex.def Info: res_ten_cushion_seventyfive.png used on input line 311
+.
+(pdftex.def)             Requested size: 241.49895pt x 116.36801pt.
+ [11]
+<res_fifteen_cushion_sixtyfive.png, id=60, 1356.06625pt x 653.44125pt>
+File: res_fifteen_cushion_sixtyfive.png Graphic file (type png)
+
+<use res_fifteen_cushion_sixtyfive.png>
+Package pdftex.def Info: res_fifteen_cushion_sixtyfive.png used on input line 3
+18.
+(pdftex.def)             Requested size: 241.49895pt x 116.36801pt.
+ (./BBAdocument.bbl [12 <./res_ten_cushion_seventyfive.png> <./res_fifteen_cush
+ion_sixtyfive.png>]
+Underfull \hbox (badness 1132) in paragraph at lines 10--13
+[]\T1/cmr/m/n/10 Ramon APARI-CIO (ra-pari-cio@unice.fr).  Adap-tive bi-trate st
+ream-ing.
+ []
+
+) [13
 
 ] (./BBAdocument.aux) ) 
 Here is how much of TeX's memory you used:
- 3674 strings out of 492995
- 48511 string characters out of 6132705
- 216524 words of memory out of 5000000
- 7131 multiletter control sequences out of 15000+600000
- 19805 words of font info for 58 fonts, out of 8000000 for 9000
+ 3699 strings out of 492995
+ 49058 string characters out of 6132705
+ 216560 words of memory out of 5000000
+ 7146 multiletter control sequences out of 15000+600000
+ 20581 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,6n,25p,537b,262s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,6n,27p,537b,262s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-s
 uper/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
@@ -587,17 +629,18 @@ onts/cm/cmmi7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/
 sfbx1000.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sf
-bx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx
-2074.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx24
-88.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000
-.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.p
-fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb
-></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on BBAdocument.pdf (10 pages, 295671 bytes).
+bx1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx
+1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx20
+74.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx2488
+.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000.p
+fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
+Output written on BBAdocument.pdf (14 pages, 441842 bytes).
 PDF statistics:
- 95 PDF objects out of 1000 (max. 8388607)
- 65 compressed objects within 1 object stream
+ 116 PDF objects out of 1000 (max. 8388607)
+ 77 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

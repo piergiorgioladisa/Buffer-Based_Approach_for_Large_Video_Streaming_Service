@@ -12,18 +12,23 @@
 \usepackage{natbib}
 
 
-\title{Buffer-based algorithm implementation to Rate Adaptation} 
+\title{Adaptive Bitrate Streaming: a buffer-based approach } 
 
 \author{Piergiorgio Ladisa
 \\
 Nicola Sebastianelli}
 \date{22/11/2018}
 
+
+\makeindex
+
 \begin{document}
 \maketitle
+\tableofcontents
+\listoffigures
 \newpage
 
-\part*{Context}
+\part*{Buffer-based ABR Algorithm}
 These days we are witnessing to the continuous growing demand of streamed content in network: anyone asks anywhere and in any-moment for contents to servers from their mobile devices. Hence, since the percentage of contents in the network is becoming everyday bigger, CDNs and ISPs are called to respond to this demand.
 The paradigm of the multimedia systems and for CDN is mainly the so-called Quality of Experience (QoE). This is very different from the paradigm on which Internet was designed, i.e. Quality of Service (QoS) and Best Effort, in fact the quality of experience is really subjective and very difficult to measure. Nevertheless, different protocols and strategies have been proposed in order to met the demand of users of streaming of contents. 
 Firstly, different strategies of streaming exists:
@@ -49,8 +54,9 @@ When the client want to access to a video-content for streaming, it chooses whic
 ABR algorithms try to balance two opposite goals. The first goal is  to maximize the video quality choosing as video rate the highest supportable by the network. The second goal is to minimize re-buffering events, which cause the video to halt if the client?s playback buffer goes empty. Data is requested in chunks and the buffer drains at 1 unit/second. So if the video-rate $R(t)$ is greater than the system capacity $C(t)$, new data is added at $C(T)/R(T)<1$, depleting the buffer.
 \begin{figure}[H]
   \begin{center}
-    \includegraphics[width=0.7\textwidth]{buffer}
+    \includegraphics[width=0.5\textwidth]{buffer}
   \end{center}
+  \caption{Relationship between system capacity and video rate in video playback buffer ~\citep{Huang:2014:BAR:2740070.2626296} }\label{buffer}
 \end{figure}
 
 In order to maximize video quality, a service could just stream at the maximum video rate $R_{max}$ all the time, but this would risk extensive re-buffering. On the other hand, to minimize rebuffering, the service could just stream at the minimum video rate $Rmin$ all the time but this extreme would lead to low video quality. Hence, the design goal of an ABR algorithm is to simultaneously obtain high performance on both metrics in order to give users a good quality of experience.
@@ -80,12 +86,12 @@ The rate map implemented by the BBA0 algorithm is the following:
   \begin{center}
     \includegraphics[width=0.7\textwidth]{ratemapBBA0}
   \end{center}
-  \caption{Rate map of the BBA0 algorithm }\label{ratemapBBA0}
+  \caption{Rate map of the BBA0 algorithm ~\citep{Huang:2014:BAR:2740070.2626296} }\label{ratemapBBA0}
 \end{figure}
 
 This algorithm add reservoir $r$ to pad for finite chunk sizes and some $C(t)$ variation. So, while filling reservoir, it request $R_{min}$ and must have $r$ greater or equal to the minimum chunk size. In addition, an upper reservoir is added to reach $R_{max}$ before the buffer B is full and above the "safe area" is where the buffer will not deplete into $r$ if $C(t)$ suddenly drops, but does not reach values lower than $R_{min}$.
 
-\subsubsection{BBA0 Algorithm}
+\subsection{BBA0 Algorithm}
 The algorithm presented in ~\citep{Huang:2014:BAR:2740070.2626296}, in pseudo-code, is the following:
 
 \textbf{Input}: 
@@ -135,7 +141,7 @@ return Rate_next;
 
 This constitute a buffer-based algorithm to the rate adaptation in playing contents from the client.
 
-\subsubsection{Implementation of BBA0 Algorithm}
+\subsection{Implementation of BBA0 Algorithm}
 The implementation that we have done of the BBA0 algorithm is written in Python and is presented below.
 
 Since the BBA0 Algorithm regards the algorithm for the controller in the player, what we have implemented is a controller used by the player defined in the script \textit{play.py}.
@@ -196,6 +202,7 @@ The method member of the class defined below is the actual implementation of the
 \item \textit{cushion} is setted at $65\%$;
 \item \textit{upper-reservoir} is setted at $20\%$;
 \end{itemize}
+In addition, the values of R\_max, R\_min, R\_curr and B\_now are taken from the \textit{Base Controller}.
 \begin{Verbatim}
     def calcControlAction(self):
 
@@ -209,7 +216,13 @@ The method member of the class defined below is the actual implementation of the
         R_min = self.feedback['min_rate']
         R_curr = self.feedback['cur_rate']
         B_now = self.feedback['queued_time']
+\end{Verbatim}
 
+In this part begin the actual implementation of the BBA0 algorithm, in the same way as it is explained by the pseudo-code in the previous section.
+
+Hence if the current value of the rate during the streaming of the content is equal to the maximum value of the rate, the upper-bound of the rate (i.e., R\_plus) is setted to the maximum value of the rate; otherwise it is setted to the minimum value computed with the function \textit{minR}.
+The same logic is adopted to compute the lower-bound of the rate (i.e., R\_minus).
+\begin{Verbatim}
         # Compute upperbound
         if R_curr == R_max:
             R_plus = R_max
@@ -221,7 +234,24 @@ The method member of the class defined below is the actual implementation of the
             R_minus = R_min
         else:
             R_minus = self.maxR(R_curr)
+\end{Verbatim}
 
+In the following, the goal is to compute the next value of the rate, depending in which region the current value of the buffer lies and we can have four cases :
+\begin{enumerate}
+\item the current value of the buffer is in the ''lower''-reservoir area: in this case the next value for the rate will be equal to the lower-bound of the rate;
+
+\item the current value of the buffer is in the ''upper''-reservoir area: in this case the next value for the rate will be equal to the upper-bound of the rate;
+
+\item the current value of the buffer is in the cushion area: in this case the rate-map function is applied and:
+\begin{itemize}
+\item if $f(B) \geq R_{plus}$ then the next value of the rate is calculated as the maximum value of the rate computed with the \textit{maxR} function;
+\item otherwise, if $f(B) \leq R_{minus}$ then the next value of the rate is calculated as the minimum value of the rate computed with the \textit{minR} function;
+\end{itemize}
+
+\item if none of the previous option is true, then the next value of the rate will be equal to the current one.
+\end{enumerate}
+
+\begin{Verbatim}
         # Compute new rate based in current buffer region
 
         # Buffer in reservoir area
@@ -245,6 +275,50 @@ The method member of the class defined below is the actual implementation of the
 
 \end{Verbatim}
 
+\subsection{Experiment setup}
+As explained in ~\citep{RamonAparicio}, two VMs are used: one that act as server and one as client. The client machine uses the \texttt{192.168.1.1/24} address, while the server machine uses the \texttt{192.168.1.254/24} address.
+
+So, the client play the content using the DASH protocol and a video is hosted on the server. In order to play the video we use the TAPAS player, that act as a DASH player, which generates the HTTP requests for the chunks of the video in different quality, depending on the adaptation algorithm adopted. In our case, the adaptation algorithm, or \textit{controller}, is the BBA0 controller. So, to client-side, from the directory \texttt{~/tapas-master} we execute the command:
+
+\begin{Verbatim}
+DEBUG=2 python play.py -m nodec -a BBA0 
+	-u http://192.168.1.254/car-20120827-manifest.mpd
+\end{Verbatim} 
+
+and the log files of the playing are saved as log files in the client directory \texttt{$\sim$\slash tapas-master\slash log\slash BBA0\slash}.
+From these log files we will plot them using the script \texttt{plot\_metrics.sh} located in the directory \texttt{$\sim$\slash Documents\slash scripts}.
+Notice that, since the two VMs are not connected by a real network but via virtualization , the values of the bandwidth estimated by the client are simulated as  realistic network bandwidth values using the script called \texttt{bw\_evol.sh} in the folder \texttt{$\sim$\slash Documents\slash scripts}.
+
+Observe that the script \textit{play.py} has been properly modified, in order to include the BBA0 controller.
+In addition, the script \textit{plot\_metrics.sh} has been modified in order to automatically oper the most recent file in the folder \texttt{$\sim$\slash tapas-master\slash logs\slash BBA0}, if no file are specified when the script is executed. This is done by adding the following code in the script:
+
+\begin{Verbatim}
+if [ ! -z $1 ]
+then
+log_filename="../../tapas-master/logs/BBA0/$1"
+else
+log_filename="../../tapas-master/logs/BBA0/$(ls ../../
+		tapas-master/logs/BBA0  -Art | tail -n 1)"
+fi
+echo "Opening: $log_filename"
+\end{Verbatim}
+
+
+\subsection{Results and Conclusion}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{res_ten_cushion_seventyfive}
+  \end{center}
+  \caption{Plot of log-file using a reservoir at $10\%$, an upper reservoir at $15\%$ and a cushion at $75\%$}\label{resten}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{res_fifteen_cushion_sixtyfive}
+  \end{center}
+  \caption{Plot of log-file using a reservoir at $15\%$, an upper reservoir at $20\%$ and a cushion at $65\%$}\label{resfifteen}
+\end{figure}
 
 
 

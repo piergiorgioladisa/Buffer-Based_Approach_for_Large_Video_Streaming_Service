@@ -1,0 +1,7 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}A buffer-based approach to rate adaptation}{5}
+\contentsline {section}{\numberline {1.1}BBA0-Algorithm}{6}
+\contentsline {subsection}{\numberline {1.1.1}BBA0 Algorithm}{7}
+\contentsline {subsection}{\numberline {1.1.2}Implementation of BBA0 Algorithm}{8}
+\contentsline {subsection}{\numberline {1.1.3}Experiment setup}{11}
+\contentsline {subsection}{\numberline {1.1.4}Results and Conclusion}{12}

@@ -6,4 +6,9 @@ Te-Yuan Huang, Ramesh Johari, Nick McKeown, Matthew Trunnell, and Mark Watson.
   video streaming service.
 \newblock {\em SIGCOMM Comput. Commun. Rev.}, 44(4):187--198, August 2014.
 
+\bibitem{RamonAparicio}
+Ramon~APARICIO (raparicio@unice.fr).
+\newblock Adaptive bitrate streaming.
+\newblock {\em EP5I9215-Content Distribution in Wireless Networks}, 2018.
+
 \end{thebibliography}
