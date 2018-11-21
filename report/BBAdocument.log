@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.8.3)  21 NOV 2018 22:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.8.3)  21 NOV 2018 23:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -452,7 +452,11 @@ LaTeX Info: Redefining \cite on input line 694.
 
 
 Writing index file BBAdocument.idx
-(./BBAdocument.aux)
+(./BBAdocument.aux
+
+LaTeX Warning: Label `resten' multiply defined.
+
+)
 \openout1 = `BBAdocument.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
@@ -467,8 +471,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
 LaTeX Font Info:    ... okay on input line 25.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
 LaTeX Font Info:    ... okay on input line 25.
-
-(/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+ (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count97
 \scratchdimen=\dimen108
@@ -589,58 +592,69 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 111.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ) [7 <./ratemapBBA0.png>] [8] [9] [10] [11]
-<res_ten_cushion_seventyfive.png, id=59, 1356.06625pt x 653.44125pt>
+<conventionalcontroller.png, id=59, 638.385pt x 385.44pt>
+File: conventionalcontroller.png Graphic file (type png)
+
+<use conventionalcontroller.png>
+Package pdftex.def Info: conventionalcontroller.png used on input line 316.
+(pdftex.def)             Requested size: 241.49895pt x 145.81001pt.
+
+<res_ten_cushion_seventyfive.png, id=60, 1356.06625pt x 653.44125pt>
 File: res_ten_cushion_seventyfive.png Graphic file (type png)
 
 <use res_ten_cushion_seventyfive.png>
-Package pdftex.def Info: res_ten_cushion_seventyfive.png used on input line 311
+Package pdftex.def Info: res_ten_cushion_seventyfive.png used on input line 328
 .
 (pdftex.def)             Requested size: 241.49895pt x 116.36801pt.
 
-<res_fifteen_cushion_sixtyfive.png, id=60, 1356.06625pt x 653.44125pt>
+<res_fifteen_cushion_sixtyfive.png, id=61, 1356.06625pt x 653.44125pt>
 File: res_fifteen_cushion_sixtyfive.png Graphic file (type png)
 
 <use res_fifteen_cushion_sixtyfive.png>
 Package pdftex.def Info: res_fifteen_cushion_sixtyfive.png used on input line 3
-18.
+35.
 (pdftex.def)             Requested size: 241.49895pt x 116.36801pt.
- (./BBAdocument.bbl [12 <./res_ten_cushion_seventyfive.png> <./res_fifteen_cush
-ion_sixtyfive.png>]
+ [12 <./conventionalcontroller.png> <./res_ten_cushion_seventyfive.png>] (./BBA
+document.bbl [13 <./res_fifteen_cushion_sixtyfive.png>]
 Underfull \hbox (badness 1132) in paragraph at lines 10--13
 []\T1/cmr/m/n/10 Ramon APARI-CIO (ra-pari-cio@unice.fr).  Adap-tive bi-trate st
 ream-ing.
  []
 
-) [13
+) [14
 
-] (./BBAdocument.aux) ) 
+] (./BBAdocument.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3699 strings out of 492995
- 49058 string characters out of 6132705
- 216560 words of memory out of 5000000
- 7146 multiletter control sequences out of 15000+600000
+ 3704 strings out of 492995
+ 49207 string characters out of 6132705
+ 216599 words of memory out of 5000000
+ 7150 multiletter control sequences out of 15000+600000
  20581 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,6n,27p,588b,262s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-s
-uper/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/
-sfbx1000.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sf
-bx1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx
-1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx20
-74.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx2488
-.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000.p
-fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb
-></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on BBAdocument.pdf (14 pages, 441786 bytes).
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/lo
+cal/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texl
+ive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
+Output written on BBAdocument.pdf (15 pages, 483328 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 121 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

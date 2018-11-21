@@ -306,6 +306,23 @@ echo "Opening: $log_filename"
 
 \subsection{Results and Conclusion}
 
+We have played the experiments both with the Conventional Controller and the BBA0 Controller, in order to compare the two controllers and spot the difference and also the improvement realized used a buffer-based approach to rate adaptation.
+In order to get a valid result and a fair comparison, we have played the same video and using the same environment, described in the previous section
+
+Using the Conventional Controller, the plot of the log file is the following:
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{conventionalcontroller}
+  \end{center}
+  \caption{Plot of log-file using the Conventional Controller}\label{resten}
+\end{figure}
+
+In addition, this controller offers an \textit{average video-rate} of $1.6235484897 Mbps$ and a \textit{total paused-time} of $26.676 s$.
+
+
+Using the BBA0, the plot of the log file is the following:
+
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width=0.7\textwidth]{res_ten_cushion_seventyfive}
@@ -320,7 +337,9 @@ echo "Opening: $log_filename"
   \caption{Plot of log-file using a reservoir at $15\%$, an upper reservoir at $20\%$ and a cushion at $65\%$}\label{resfifteen}
 \end{figure}
 
+With this controller , the \textit{average video-rate} is $3.1608442136 Mbps$, while the \textit{total paused-time} is equal to $0.857 s$
 
+As we can see, with the BBA0 Controller we get a better, so an higher, average video-rate  and a smaller total paused-time: this means that we spend less time, during the streaming, for the buffering and in addition we get a better video-rate, hence a better quality of video-chunks. So the general QoE has improved.
 
 %------- BIBLIOGRAPHY -----------
 \bibliography{bibliography}
