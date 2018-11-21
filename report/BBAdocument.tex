@@ -176,7 +176,7 @@ so, the declaration of the function member of the class requires as input the ob
         		(R_min - ((reservoir / cushion) * (R_max - R_min)))
 \end{Verbatim}
 
-WRITE THE EXPLANATION OF FUNCTIONS MAXR AND MIN R
+The aim of the functions \textit{minR(constraint)} and \textit{maxR(constraint)} is to find the smaller and bigger rate between the available ones that respect a given constraint. In order to compute them, in the \textit{maxR(constraint)} function all the rates that are smaller than the constraint are inserted in the array results and then the bigger of them is selected, in other hand in the \textit{minR(constraint)} function all the rates that are bigger than the constraint are inserted in the array results and then the smaller of them is selected.
 
 \begin{Verbatim}
     def maxR(self, constraint):
