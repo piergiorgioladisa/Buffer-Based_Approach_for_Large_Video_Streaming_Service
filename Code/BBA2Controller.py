@@ -64,7 +64,7 @@ class BBA2Controller(BaseController):
         R_min = self.feedback['min_rate']
         R_curr = self.feedback['cur_rate']
         B_now = self.feedback['queued_time']
-	delta_B = self.feedback['fragment_duration']-(self.feedback['last_fragment_size'] / R_MIN)
+	delta_B = self.feedback['fragment_duration'] - (self.feedback['last_fragment_size'] / self.feedback['bwe'])
 	global startup_phase	
 	
         # Compute upperbound
@@ -85,7 +85,8 @@ class BBA2Controller(BaseController):
 	print "delta_B: ", delta_B
         # Compute new rate based in current buffer region
 	
-	if delta_B > 0.875 * self.feedback['fragment_duration']:
+	
+	if delta_B > (1- 0.5/(1.69*2)) * self.feedback['fragment_duration']:
 	    Rate_next = R_plus
 	
         # Buffer in reservoir area
