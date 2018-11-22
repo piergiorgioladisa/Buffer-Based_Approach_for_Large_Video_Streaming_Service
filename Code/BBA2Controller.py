@@ -15,7 +15,6 @@ from utils_py.util import debug, format_bytes
 from BaseController import BaseController
 
 DEBUG = 1
-startup_phase = True
 
 # This controller is an implementation of the BBA0 Controller
 # described in Chapter 4 of the paper:
@@ -65,7 +64,6 @@ class BBA2Controller(BaseController):
         R_curr = self.feedback['cur_rate']
         B_now = self.feedback['queued_time']
 	delta_B = self.feedback['fragment_duration'] - (self.feedback['last_fragment_size'] / self.feedback['bwe'])
-	global startup_phase	
 	
         # Compute upperbound
         if R_curr == R_max:
@@ -85,10 +83,14 @@ class BBA2Controller(BaseController):
 	print "delta_B: ", delta_B
         # Compute new rate based in current buffer region
 	
-	
+	# Apply the constraint to the variation of the buffer as explained in BBA-2
+	# The value of e in our case is equal to 1.69, multiplied by 2 because of the
+	# ratio Ri/Ri+1.
 	if delta_B > (1- 0.5/(1.69*2)) * self.feedback['fragment_duration']:
 	    Rate_next = R_plus
 	
+	# After the startup phase, apply BBA-0 algorithm
+
         # Buffer in reservoir area
         elif B_now <= reservoir:
             Rate_next = R_min
