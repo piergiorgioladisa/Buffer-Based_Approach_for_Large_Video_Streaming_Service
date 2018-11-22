@@ -13,12 +13,12 @@ from twisted.python import usage, log
 
 class Options(usage.Options):
     optParameters = [
-                     ('controller', 'a', 'conventional', 'Adaptive Algorithm [conventional|tobasco|max|BBA0]'),
-                     ('url', 'u', 'http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8', 'The playlist url. It determines the parser for the playlist'),
-                     ('media_engine', 'm',  'gst', 'Player type [gst|nodec|fake]'),
-                     ('log_sub_dir', 'l', None, 'Log sub-directory'),
-                     ('stress_test', 's', False, 'Enable stress test. Switch level for each segment, cyclically.'),
-                     ]
+        ('controller', 'a', 'conventional', 'Adaptive Algorithm [conventional|tobasco|max]'),
+        ('url', 'u', 'http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8', 'The playlist url. It determines the parser for the playlist'),
+        ('media_engine', 'm',  'gst', 'Player type [gst|nodec|fake]'),
+        ('log_sub_dir', 'l', None, 'Log sub-directory'),
+        ('stress_test', 's', False, 'Enable stress test. Switch level for each segment, cyclically.'),
+    ]
 options = Options()
 try:
     options.parseOptions()
@@ -29,7 +29,7 @@ except Exception, e:
 
 def select_player():
     log.startLogging(sys.stdout)
-    
+
     persistent_conn = True
     check_warning_buffering=True
     
@@ -51,57 +51,60 @@ def select_player():
 
     from twisted.internet import reactor
 
-#Controller
-if options['controller'] == 'conventional':
-    from controllers.ConventionalController import ConventionalController
+    #Controller
+    if options['controller'] == 'conventional':
+        from controllers.ConventionalController import ConventionalController
         controller = ConventionalController()
     elif options['controller'] == 'tobasco':
         from controllers.TOBASCOController import TOBASCOController
         controller = TOBASCOController()
-elif options['controller'] == 'max':
-    check_warning_buffering=False
+    elif options['controller'] == 'max':
+        check_warning_buffering=False
         from controllers.MaxQualityController import MaxQualityController
         controller = MaxQualityController()
     elif options['controller'] == 'BBA0':
-        from controllers.BBA0Controller import BBA0Controller
+	from controllers.BBA0Controller import BBA0Controller
         controller = BBA0Controller()
-else:
-    print 'Error. Unknown Control Algorithm'
+    elif options['controller'] == 'BBA2':
+	from controllers.BBA2Controller import BBA2Controller
+        controller = BBA2Controller()
+    else:
+        print 'Error. Unknown Control Algorithm'
         sys.exit()
-    
+
     if not options['log_sub_dir']:
         log_sub_dir = options['controller']
     else:
-        log_sub_dir = options['log_sub_dir']
+        log_sub_dir = options['log_sub_dir'] 
 
-#Parser
-url_playlist = options['url']
-if ".mpd" in url_playlist:
-    from parsers.DASH_mp4Parser import DASH_mp4Parser
+    #Parser
+    url_playlist = options['url']
+    if ".mpd" in url_playlist:
+        from parsers.DASH_mp4Parser import DASH_mp4Parser
         parser = DASH_mp4Parser(url_playlist)
     elif ".m3u8" in url_playlist:
         from parsers.HLS_mpegtsParser import HLS_mpegtsParser
         parser = HLS_mpegtsParser(url_playlist)
-else:
-    print 'Error. Unknown Parser'
+    else: 
+        print 'Error. Unknown Parser'
         sys.exit()
 
     #StartPlayer
     from TapasPlayer import TapasPlayer
     player = TapasPlayer(controller=controller, parser=parser, media_engine=media_engine,
-                         log_sub_dir=log_sub_dir, log_period=0.1,
-                         max_buffer_time=80,
-                         inactive_cycle=1, initial_level=0,
-                         use_persistent_connection=persistent_conn,
-                         check_warning_buffering=check_warning_buffering,
-                         stress_test=options['stress_test'])
-#print 'Ready to play'
-player.play()
-
+        log_sub_dir=log_sub_dir, log_period=0.1,
+        max_buffer_time=80,
+        inactive_cycle=1, initial_level=0,
+        use_persistent_connection=persistent_conn,
+        check_warning_buffering=check_warning_buffering,
+        stress_test=options['stress_test'])
+    #print 'Ready to play'
+    player.play()
+    
     try:
         reactor.run()
-except Exception, e:
-    pass
+    except Exception, e:
+        pass
 
 if __name__ == '__main__':
     select_player()
