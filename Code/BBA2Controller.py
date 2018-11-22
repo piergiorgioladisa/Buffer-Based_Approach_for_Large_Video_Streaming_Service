@@ -15,7 +15,7 @@ from utils_py.util import debug, format_bytes
 from BaseController import BaseController
 
 DEBUG = 1
-
+startup_phase = True
 
 # This controller is an implementation of the BBA0 Controller
 # described in Chapter 4 of the paper:
@@ -64,8 +64,9 @@ class BBA2Controller(BaseController):
         R_min = self.feedback['min_rate']
         R_curr = self.feedback['cur_rate']
         B_now = self.feedback['queued_time']
-	delta_B = self.feedback['fragment_duration']-(self.feedback['last_fragment_size'] / R_curr)
-		
+	delta_B = self.feedback['fragment_duration']-(self.feedback['last_fragment_size'] / R_MIN)
+	global startup_phase	
+	
         # Compute upperbound
         if R_curr == R_max:
             R_plus = R_max
