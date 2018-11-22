@@ -341,6 +341,82 @@ With this controller , the \textit{average video-rate} is $3.1608442136 Mbps$, w
 
 As we can see, with the BBA0 Controller we get a better, so an higher, average video-rate  and a smaller total paused-time: this means that we spend less time, during the streaming, for the buffering and in addition we get a better video-rate, hence a better quality of video-chunks. So the general QoE has improved.
 
+\section{BBA2-Algorithm}
+As a further improvement of BBA0-Algorithm, we have implemented a modified version of the BBA2-Algorithm but, since the original BBA2, as explained in ~\cite{Huang:2014:BAR:2740070.2626296}, applies an "aggressive" approach during the start-up phase, then uses the BBA1~\cite{Huang:2014:BAR:2740070.2626296}, instead of using BBA1  we use again BBA0. The reason of that is that BBA1 reasons on the chunk size instead of the rates (compared to BBA0), but in our environment we don't have different chunk size, so we cannot test it. That is why we choosed to switch on BBA0 instead on BBA1 after the start-up phase ends.
+
+During the start-up phase, the playback buffer is empty and it does not have useful information that allow us to choose a video rate. But as we can see from the plot of BBA0 execution, the buffer start with low video rate and, step-by-step, increase until a certain value, than decreases. So, the idea behind BBA2 is the fact during the start-up is possible to improve the video rate, entering in the risky area, i.e. the area above the reservoir and $f(B)$. Hence, BBA2 Algorithm behave more aggressively during the start-up phase, involving a capacity estimation in order to fill the buffer as much as possible, allowing to have an higher video rate than what the rate-map suggests.
+Two equivalent models of the streaming playback buffer can be represented as following:
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{modelplaybackbuffer.png}
+  \end{center}
+  \caption{Equivalent models of the streaming playback buffer ~\cite{Huang:2014:BAR:2740070.2626296}}\label{playback}
+\end{figure}
+
+From this model we can deduce that the delta of the buffer can be expressed as:
+
+\[
+\Delta B = V - (\frac{ChunkSize}{c[k]})
+\]
+
+where $V$ is the instantaneous video rate, while the ratio $ChunkSize/c[k]$ represents the system capacity.
+Let us assume that the current video rate is $R_i$, in order to safely step up a rate, $c[k]$ needs to be at least equal to $R_{i+1}$ to avoid rebuffers. From this assumption implies that:
+
+\[
+\Delta B \geq V - \frac{ChunkSize}{R_{i+1}}
+\]
+
+Since videos are encoded in Variable BitRate (VBR), the instantaneous video rate can be higher than the nominal rate. So, indicating with $e$ the \textit{max-to-average} ratio in a VBR stream, the value $eR_{i+1}$ represents the maximum instantaneous video rate in $R_{i+1}$. So, considering a VBR and an empty buffer, it is required that:
+
+\[
+\Delta B \geq V - \frac{ChunkSize}{eR_{i+1}}
+\]
+
+in order to step up safely from $R_{i}$ to $R_{i+1}$.
+In our case the max-to-average ratio $e$ is computed looking at the different segment sizes located in the folder \texttt{\~/Documents/scripts/segments\_quality\#} (where \# is replaced with 0, 1, 2, 3, 4 and 5). Hence, computing the average of the sizes of files in these directory and dividing the maximum size by this average, we get as value of $e \sim 1.69$. In addition $R_{i} / R_{i+1} \sim 2$, so $\Delta B $ needs to be larger than $1 - \frac{0.5}{1.69*2}$. If this condition is true, and so we are in the startup phase, the value picked for the $R_{next}$ is the upper-bound of the rate, i.e. $R^+$. 
+
+\subsection{Implementation of BBA2 Algorithm}
+
+Basing on what we said in the previous section, the implementation of this is presented in the following. 
+The code is similar to the BBA0, but what we have added is the definition of $\Delta B$  inside the \textit{calcControlAction()}:
+
+\begin{Verbatim}
+delta_B = self.feedback['fragment_duration'] - (self.feedback['last_fragment_size'] / self.feedback['bwe'])
+\end{Verbatim}
+
+In fact the istantaneous video rate V is the member of the object \textit{BaseController} named \textit{fragment\_duration}. The \textit{ChunkSize} is the \textit{last\_fragment\_size}, while the capacity for the k-th chunk is represented by the variable \textit{bwe}.
+
+So if the condition for the $\Delta B$ is true, the value for the $R_{next}$ will be $R^+$:
+
+\begin{Verbatim}
+if delta_B > (1- 0.5/(1.69*2)) * self.feedback['fragment_duration']:
+	    Rate_next = R_plus
+\end{Verbatim}
+
+\subsection{Experiment setup}
+
+The experiment setup is the same as for the BBA0 algorithm, in order to make a fair comparison between the two algorithm.
+
+\subsection{Results and Conclusion}
+
+In order to compare the implementation of the (modified) BBA2 algorithm and spot the difference or see if improvements are achieved, we have used the same values for the cushion and reservoir as previously.
+In order to get a valid result and a fair comparison, we have played the same video and using the same environment, described in the previous section
+
+Using the (modified) BBA2 algorithm, the plot of the log file is the following:
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{bba2plot}
+  \end{center}
+  \caption{Plot of log-file using the BBA2 Controller}\label{resten}
+\end{figure}
+
+With this controller , the \textit{average video-rate} is $3.3776721068 Mbps$, while the \textit{total paused-time} is equal to $0.941 s$.
+As we can see, we have achieved a better result for the average video rate, compared to the Conventional Controller and the BBA0 Controller: from this implies a better quality for the video. Compared to the BBA0, in addition, we have a worse value for the total-paused time, even if the difference is not so much: in fact we will spend just the $7.2\%$ of time in buffering more than the BBA0.
+But from a user perspective, this loss is negligible, since is not so much, but with this improvement is possible to get a better quality for the streaming.
+
+
 %------- BIBLIOGRAPHY -----------
 \bibliography{bibliography}
 \bibliographystyle{plain}

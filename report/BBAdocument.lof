@@ -5,3 +5,5 @@
 \contentsline {figure}{\numberline {1.3}{\ignorespaces Plot of log-file using the Conventional Controller}}{12}
 \contentsline {figure}{\numberline {1.4}{\ignorespaces Plot of log-file using a reservoir at $10\%$, an upper reservoir at $15\%$ and a cushion at $75\%$}}{12}
 \contentsline {figure}{\numberline {1.5}{\ignorespaces Plot of log-file using a reservoir at $15\%$, an upper reservoir at $20\%$ and a cushion at $65\%$}}{13}
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Equivalent models of the streaming playback buffer ~\cite {Huang:2014:BAR:2740070.2626296}}}{14}
+\contentsline {figure}{\numberline {1.7}{\ignorespaces Plot of log-file using the BBA2 Controller}}{15}
