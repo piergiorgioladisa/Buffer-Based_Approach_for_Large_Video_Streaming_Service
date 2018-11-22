@@ -33,7 +33,7 @@ These days we are witnessing to the continuous growing demand of streamed conten
 The paradigm of the multimedia systems and for CDN is mainly the so-called Quality of Experience (QoE). This is very different from the paradigm on which Internet was designed, i.e. Quality of Service (QoS) and Best Effort, in fact the quality of experience is really subjective and very difficult to measure. Nevertheless, different protocols and strategies have been proposed in order to met the demand of users of streaming of contents. 
 Firstly, different strategies of streaming exists:
 \begin{itemize}
-\item all-in-once, i.e. the content is entirely sent to the user. This approach is enforced by the server and the encoding rate is unintentional, since the client's buffer is filled up, in the same way in which the TCP buffer is filled up; since TCP performs the flow control, the client with this approach read at the encoding rate;
+\item all-in-once, i.e. the content is entirely sent to the user. This approach is enforced by the server and the encoding rate is unintentional, since the client buffer is filled up, in the same way in which the TCP buffer is filled up; since TCP performs the flow control, the client with this approach read at the encoding rate;
 \item throttling, i.e. the rate is adapted to the user with two possible approach:
 \begin{itemize}
 \item on-off-S, in which the connection is maintained persistently;
@@ -45,13 +45,13 @@ In this context, the mainly adopted protocol is HTTP Adaptive Streaming protocol
 This adaptation is usually done on client-side. Here the content is divided in chunks and available in different qualities. So HAS allows to encode each segment in different quality referring to the current bandwidth and so the stream is splitted into a sequence of segments, instead of downloading one entire large file (as in the all-in-once approach). The policies of HAS are:
 \begin{itemize}
 \item Rate-based, that select the highest possible video representation referring to the measured speed from the previous received chunk;
-\item Buffer-based, that uses different thresholds for the buffer in a way in which the more the buffer is filled, the more quality of the video is. Thus, with this approach, the quality can switch step-by-steo at each new request of a video segment: it is impossible to jump from the lowest to the highest quality just in one step;
+\item Buffer-based, that uses different thresholds for the buffer in a way in which the more the buffer is filled, the more quality of the video is. Thus, with this approach, the quality can switch step-by-step at each new request of a video segment: it is impossible to jump from the lowest to the highest quality just in one step;
 \item Buffer and Rate based. This is an hybrid approach, i.e. is based on the rate-based approach basically, but the previous chunk download speed is weighted using a factor that depends on the amount of the saturation of the buffer: if the buffer is depleting the previous chunk, the download speed will be considered to be less than the measured one and hence a lower quality is selected. 
 \end{itemize}
 
 \chapter{A buffer-based approach to rate adaptation}
-When the client want to access to a video-content for streaming, it chooses which the video rate to stream by monitoring network conditions and estimating the available network capacity. This process is referred to as \textit{adaptive bit rate selection} or \textit{ABR}.
-ABR algorithms try to balance two opposite goals. The first goal is  to maximize the video quality choosing as video rate the highest supportable by the network. The second goal is to minimize re-buffering events, which cause the video to halt if the client?s playback buffer goes empty. Data is requested in chunks and the buffer drains at 1 unit/second. So if the video-rate $R(t)$ is greater than the system capacity $C(t)$, new data is added at $C(T)/R(T)<1$, depleting the buffer.
+When the client wants to access to a video-content for streaming, it chooses which the video rate to stream by monitoring network conditions and estimating the available network capacity. This process is referred to as \textit{adaptive bit rate selection} or \textit{ABR}.
+ABR algorithms try to balance two opposite goals. The first goal is  to maximize the video quality choosing as video rate the highest supportable by the network. The second goal is to minimize rebuffering events, which cause the video to halt if the client's playback buffer goes empty. Data is requested in chunks and the buffer drains at 1 unit/second. So if the video-rate $R(t)$ is greater than the system capacity $C(t)$, new data is added at $C(T)/R(T)<1$, depleting the buffer.
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width=0.5\textwidth]{buffer}
@@ -59,8 +59,8 @@ ABR algorithms try to balance two opposite goals. The first goal is  to maximize
   \caption{Relationship between system capacity and video rate in video playback buffer ~\citep{Huang:2014:BAR:2740070.2626296} }\label{buffer}
 \end{figure}
 
-In order to maximize video quality, a service could just stream at the maximum video rate $R_{max}$ all the time, but this would risk extensive re-buffering. On the other hand, to minimize rebuffering, the service could just stream at the minimum video rate $Rmin$ all the time but this extreme would lead to low video quality. Hence, the design goal of an ABR algorithm is to simultaneously obtain high performance on both metrics in order to give users a good quality of experience.
-Firstly, the client measures how fast chunks arrive to estimate capacity, let us say $C\textit{(}t\textit{)}$. The estimate enriched with knowledge of the buffer occupancy, which is represented with an  adjustment factor  $F\textit{(}B\textit{(}t\textit{)}\textit{)}$, i.e. a function of the playback buffer occupancy. So, the selected video rate is $R\textit{(}t\textit{)} = F(B\textit{(}t\textit{)})C\textit{(}t\textit{)}$; different designs use different adjustment functions $F\textit{(}.\textit{)}$.
+In order to maximize video quality, a service could just stream at the maximum video rate $R_{max}$ all the time, but this would risk extensive rebuffering. On the other hand, to minimize rebuffering, the service could just stream at the minimum video rate $Rmin$ all the time but this extreme would led to a lower video quality. Hence, the design goal of an ABR algorithm is to simultaneously obtain high performance on both metrics in order to give users a good quality of experience.
+Firstly, the client measures how fast chunks arrive to estimate capacity, let us say $C\textit{(}t\textit{)}$. The estimate is enriched with knowledge of the buffer occupancy, which is represented with an  adjustment factor  $F\textit{(}B\textit{(}t\textit{)}\textit{)}$, i.e. a function of the playback buffer occupancy. So, the selected video rate is $R\textit{(}t\textit{)} = F(B\textit{(}t\textit{)})C\textit{(}t\textit{)}$; different designs use different adjustment functions $F\textit{(}.\textit{)}$.
 When the buffer contains many chunks, $R(t)$ can safely deviate from $C(t)$ without triggering a rebuffer. The client can aggressively try to maximize the video quality by picking $R(t) = C(t)$. But when the buffer is low, the client should be more conservative.
 
 We say that an ABR algorithm is \textit{buffer-based} if it picks the video rate as a function of the current buffer occupancy $B(t)$.
@@ -162,7 +162,7 @@ class BBA0Controller(BaseController):
 The code below specifies the rate-map function $f(B)$, that is the line passing from the points $(reservoir, R_{min})$ and $(reservoir+cushion, R_{max})$. Hence the equation for the line is the following:
 
 \[
-f(B) = B *(\frac{(R_{max} - R_{min})}{cushion} + (R_{min} - \frac{reservoir}{cushion}) * (R_{max} - R_{min})
+f(B) = B *\frac{(R_{max} - R_{min})}{cushion} + (R_{min} - \frac{reservoir}{cushion}) * (R_{max} - R_{min})
 \]
 
 so, the declaration of the function member of the class requires as input the object itself (i.e., \textit{self}), the current value of the buffer (i.e., \textit{B\_now}), the value for the \textit{reservoir}, the \textit{cushion} and the maximum and minimum values of the rate (i.e., respectively \textit{R\_max} and \textit{R\_min}).
@@ -176,7 +176,7 @@ so, the declaration of the function member of the class requires as input the ob
         		(R_min - ((reservoir / cushion) * (R_max - R_min)))
 \end{Verbatim}
 
-The aim of the functions \textit{minR(constraint)} and \textit{maxR(constraint)} is to find the smaller and bigger rate between the available ones that respect a given constraint. In order to compute them, in the \textit{maxR(constraint)} function all the rates that are smaller than the constraint are inserted in the array results and then the bigger of them is selected, in other hand in the \textit{minR(constraint)} function all the rates that are bigger than the constraint are inserted in the array results and then the smaller of them is selected.
+The aim of the functions \textit{minR(constraint)} and \textit{maxR(constraint)} is to find the smaller and bigger rate between the available ones that respect a given constraint. In order to compute them, in the \textit{maxR(constraint)} function all the rates that are smaller than the constraint are inserted in the array results and then the bigger of them is selected; on the other hand in the \textit{minR(constraint)} function all the rates that are bigger than the constraint are inserted in the array results and then the smaller of them is selected.
 
 \begin{Verbatim}
     def maxR(self, constraint):
@@ -278,7 +278,7 @@ In the following, the goal is to compute the next value of the rate, depending i
 \subsection{Experiment setup}
 As explained in ~\citep{RamonAparicio}, two VMs are used: one that act as server and one as client. The client machine uses the \texttt{192.168.1.1/24} address, while the server machine uses the \texttt{192.168.1.254/24} address.
 
-So, the client play the content using the DASH protocol and a video is hosted on the server. In order to play the video we use the TAPAS player, that act as a DASH player, which generates the HTTP requests for the chunks of the video in different quality, depending on the adaptation algorithm adopted. In our case, the adaptation algorithm, or \textit{controller}, is the BBA0 controller. So, to client-side, from the directory \texttt{~/tapas-master} we execute the command:
+So, the client play the content using the DASH protocol and a video is hosted on the server. In order to play the video we use the TAPAS player, that act as a DASH player, which generates the HTTP requests for the chunks of the video in different quality, depending on the adaptation algorithm adopted. In our case, the adaptation algorithm, or \textit{controller}, is the BBA0 controller. So, to client-side, from the directory \texttt{$\sim$/tapas-master} we execute the command:
 
 \begin{Verbatim}
 DEBUG=2 python play.py -m nodec -a BBA0 
@@ -290,7 +290,7 @@ From these log files we will plot them using the script \texttt{plot\_metrics.sh
 Notice that, since the two VMs are not connected by a real network but via virtualization , the values of the bandwidth estimated by the client are simulated as  realistic network bandwidth values using the script called \texttt{bw\_evol.sh} in the folder \texttt{$\sim$\slash Documents\slash scripts}.
 
 Observe that the script \textit{play.py} has been properly modified, in order to include the BBA0 controller.
-In addition, the script \textit{plot\_metrics.sh} has been modified in order to automatically oper the most recent file in the folder \texttt{$\sim$\slash tapas-master\slash logs\slash BBA0}, if no file are specified when the script is executed. This is done by adding the following code in the script:
+In addition, the script \textit{plot\_metrics.sh} has been modified in order to automatically open the most recent file in the folder \texttt{$\sim$\slash tapas-master\slash logs\slash BBA0}, if no file are specified when the script is executed. This is done by adding the following code in the script:
 
 \begin{Verbatim}
 if [ ! -z $1 ]
@@ -315,10 +315,10 @@ Using the Conventional Controller, the plot of the log file is the following:
   \begin{center}
     \includegraphics[width=0.7\textwidth]{conventionalcontroller}
   \end{center}
-  \caption{Plot of log-file using the Conventional Controller}\label{resten}
+  \caption{Plot of log-file using the Conventional Controller}\label{fig:conventional}
 \end{figure}
 
-In addition, this controller offers an \textit{average video-rate} of $1.6235484897 Mbps$ and a \textit{total paused-time} of $26.676 s$.
+This controller offers an \textit{average video-rate} of $1.623 Mbps$ and a \textit{total paused-time} of $26.676 s$.
 
 
 Using the BBA0, the plot of the log file is the following:
@@ -327,17 +327,19 @@ Using the BBA0, the plot of the log file is the following:
   \begin{center}
     \includegraphics[width=0.7\textwidth]{res_ten_cushion_seventyfive}
   \end{center}
-  \caption{Plot of log-file using a reservoir at $10\%$, an upper reservoir at $15\%$ and a cushion at $75\%$}\label{resten}
+  \caption{Plot of log-file using a reservoir at $10\%$, an upper reservoir at $15\%$ and a cushion at $75\%$}
+  \label{fig:bba01}
 \end{figure}
 
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width=0.7\textwidth]{res_fifteen_cushion_sixtyfive}
   \end{center}
-  \caption{Plot of log-file using a reservoir at $15\%$, an upper reservoir at $20\%$ and a cushion at $65\%$}\label{resfifteen}
+  \caption{Plot of log-file using a reservoir at $15\%$, an upper reservoir at $20\%$ and a cushion at $65\%$}
+   \label{fig:bba02}
 \end{figure}
 
-With this controller , the \textit{average video-rate} is $3.1608442136 Mbps$, while the \textit{total paused-time} is equal to $0.857 s$
+With this controller , the \textit{average video-rate} is $3.161 Mbps$, while the \textit{total paused-time} is equal to $0.857 s$
 
 As we can see, with the BBA0 Controller we get a better, so an higher, average video-rate  and a smaller total paused-time: this means that we spend less time, during the streaming, for the buffering and in addition we get a better video-rate, hence a better quality of video-chunks. So the general QoE has improved.
 
@@ -351,7 +353,7 @@ Two equivalent models of the streaming playback buffer can be represented as fol
   \begin{center}
     \includegraphics[width=0.7\textwidth]{modelplaybackbuffer.png}
   \end{center}
-  \caption{Equivalent models of the streaming playback buffer ~\cite{Huang:2014:BAR:2740070.2626296}}\label{playback}
+  \caption{Equivalent models of the streaming playback buffer ~\cite{Huang:2014:BAR:2740070.2626296}}\label{fig:playback}
 \end{figure}
 
 From this model we can deduce that the delta of the buffer can be expressed as:
@@ -374,7 +376,7 @@ Since videos are encoded in Variable BitRate (VBR), the instantaneous video rate
 \]
 
 in order to step up safely from $R_{i}$ to $R_{i+1}$.
-In our case the max-to-average ratio $e$ is computed looking at the different segment sizes located in the folder \texttt{\~/Documents/scripts/segments\_quality\#} (where \# is replaced with 0, 1, 2, 3, 4 and 5). Hence, computing the average of the sizes of files in these directory and dividing the maximum size by this average, we get as value of $e \sim 1.69$. In addition $R_{i} / R_{i+1} \sim 2$, so $\Delta B $ needs to be larger than $1 - \frac{0.5}{1.69*2}$. If this condition is true, and so we are in the startup phase, the value picked for the $R_{next}$ is the upper-bound of the rate, i.e. $R^+$. 
+In our case the max-to-average ratio $e$ is computed looking at the different segment sizes located in the folder \texttt{$\sim$/Documents/scripts/segments\_quality\#} (where \# is replaced with 0, 1, 2, 3, 4 and 5). Hence, computing the average of the sizes of files in these directory and dividing the maximum size by this average, we get as value of $e \sim 1.69$. In addition $R_{i} / R_{i+1} \sim 2$, so $\Delta B $ needs to be larger than $1 - \frac{0.5}{1.69*2}$. If this condition is true, and so we are in the startup phase, the value picked for the $R_{next}$ is the upper-bound of the rate, i.e. $R^+$. 
 
 \subsection{Implementation of BBA2 Algorithm}
 
@@ -382,7 +384,8 @@ Basing on what we said in the previous section, the implementation of this is pr
 The code is similar to the BBA0, but what we have added is the definition of $\Delta B$  inside the \textit{calcControlAction()}:
 
 \begin{Verbatim}
-delta_B = self.feedback['fragment_duration'] - (self.feedback['last_fragment_size'] / self.feedback['bwe'])
+delta_B = self.feedback['fragment_duration'] -
+	 (self.feedback['last_fragment_size'] / self.feedback['bwe'])
 \end{Verbatim}
 
 In fact the istantaneous video rate V is the member of the object \textit{BaseController} named \textit{fragment\_duration}. The \textit{ChunkSize} is the \textit{last\_fragment\_size}, while the capacity for the k-th chunk is represented by the variable \textit{bwe}.
@@ -409,10 +412,11 @@ Using the (modified) BBA2 algorithm, the plot of the log file is the following:
   \begin{center}
     \includegraphics[width=0.7\textwidth]{bba2plot}
   \end{center}
-  \caption{Plot of log-file using the BBA2 Controller}\label{resten}
+  \caption{Plot of log-file using the BBA2 Controller}\label{fig:bba2}
 \end{figure}
 
-With this controller , the \textit{average video-rate} is $3.3776721068 Mbps$, while the \textit{total paused-time} is equal to $0.941 s$.
+As we can see, comparing with Figure ~\ref{fig:bba01} or Figure ~\ref{fig:bba02}, in  Figure ~\ref{fig:bba2} the buffer is filled more rapidly during the startup phase: this is why the BBA2 approach is more aggressive. It just to compare in fact the profile of the \textit{enqueued\_t}.
+With this controller, the \textit{average video-rate} is $3.378 Mbps$, while the \textit{total paused-time} is equal to $0.941 s$.
 As we can see, we have achieved a better result for the average video rate, compared to the Conventional Controller and the BBA0 Controller: from this implies a better quality for the video. Compared to the BBA0, in addition, we have a worse value for the total-paused time, even if the difference is not so much: in fact we will spend just the $7.2\%$ of time in buffering more than the BBA0.
 But from a user perspective, this loss is negligible, since is not so much, but with this improvement is possible to get a better quality for the streaming.
 
